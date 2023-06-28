@@ -1,0 +1,132 @@
+.project {
+  padding: 110px 70px;
+}
+
+@media screen and (max-width: 800px) {
+  .project {
+    padding: 90px 50px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .project {
+    padding: 70px 18px;
+  }
+}
+
+.project__title {
+  padding: 0;
+  margin: 0;
+  padding-bottom: 23px;
+  width: 100%;
+  border-bottom: 1px solid #000000;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 400px) {
+  .project__title {
+    padding-bottom: 28px;
+    font-size: 22px;
+  }
+}
+
+.project__container {
+  display: flex;
+  gap: 40px;
+  padding-top: 70px;
+  padding-bottom: 110px;
+}
+
+@media screen and (max-width: 800px) {
+  .project__container {
+    gap: 30px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .project__container {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    flex-direction: column;
+    gap: 56px;
+  }
+}
+
+.project__info {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0;
+}
+
+@media screen and (max-width: 400px) {
+  .project__info {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+}
+
+.project__text {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0;
+  margin-top: 26px;
+}
+
+@media screen and (max-width: 800px) {
+  .project__text {
+    font-size: 12px;
+    margin-top: 22px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .project__text {
+    font-size: 11px;
+    margin-top: 16px;
+    line-height: 16px;
+  }
+}
+
+.project__timing {
+  display: grid;
+  grid-template-columns: 2fr 8fr;
+  width: 100%;
+  height: 72px;
+  text-align: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 500px) {
+  .project__timing {
+    grid-template-columns: 1fr 2fr;
+    height: 70px;
+    font-size: 11px;
+  }
+}
+
+.project__line {
+  padding: 11px 0;
+  margin: 0;
+  background-color: #f2f2f2;
+  border: none;
+}
+
+@media screen and (max-width: 500px) {
+  .project__line {
+    padding: 12px 0;
+  }
+}
+
+.project__line_black {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.project__line_transparent {
+  background-color: #ffffff;
+  color: #a0a0a0;
+}
