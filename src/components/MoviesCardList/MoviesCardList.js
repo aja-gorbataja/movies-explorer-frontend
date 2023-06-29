@@ -8,8 +8,8 @@ function MoviesCardList({ moviesList }) {
         <MoviesCard key={movie.movieId} nameRU={movie.nameRU} duration={movie.duration} image={movie.image} />
         ))}
       </div>
-      <div className="movie-list__pagination">
-        <button className="movie-list__button">Ещё</button>
+      <div className="movies-list__pagination">
+        <button className="movies-list__button">Ещё</button>
       </div>
     </section>
   )

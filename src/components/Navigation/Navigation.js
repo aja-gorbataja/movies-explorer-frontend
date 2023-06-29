@@ -19,7 +19,7 @@ function Navigation() {
         </div>
       </div>
       <div className="navigation__burger" onClick={() => setNav(!nav)}>
-        {nav ? <div className="navigation__burger_close"></div> : <div className="navigation__burger_open"></div>}
+        {nav ? <div className="navigation__burger-close"></div> : <div className="navigation__burger-open"></div>}
       </div>
     </div>
   )

@@ -40,13 +40,13 @@
   }
 }
 
-.movie-list__pagination {
+.movies-list__pagination {
   display: flex;
   justify-content: center;
   padding: 80px 0;
 }
 
-.movie-list__button {
+.movies-list__button {
   text-align: center;
   font-size: 12px;
   font-weight: 500;
@@ -59,12 +59,12 @@
 }
 
 @media screen and (max-width: 320px) {
-  .movie-list__button {
+  .movies-list__button {
     max-width: 240px;
   }
 }
 
-.movie-list__button:hover {
+.movies-list__button:hover {
   cursor: pointer;
   opacity: 0.8;
 }

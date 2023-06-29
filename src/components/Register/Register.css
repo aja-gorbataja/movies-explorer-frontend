@@ -56,7 +56,7 @@
 }
 
 .register__form {
-  padding-bottom: 165px;
+  padding-bottom: 110px;
 }
 
 @media screen and (max-width: 800px) {
@@ -65,7 +65,18 @@
   }
 }
 
-.register__input-name {
+@media screen and (max-width: 400px) {
+  .register__form {
+    padding-bottom: 198px;
+  }
+}
+
+.register__container {
+  padding-bottom: 24px;
+  box-sizing: border-box;
+}
+
+.register__label {
   color: #a0a0a0;
   font-size: 10px;
   font-weight: 400;
@@ -80,14 +91,22 @@
   background-color: #ffffff;
   box-sizing: border-box;
   padding-bottom: 10px;
-  padding-top: 5px;
-  margin-bottom: 24px;
 }
 
 .register__input:focus {
   font-weight: 500;
   outline: none;
   border-bottom: 1px solid #000000;
+}
+
+.register__input_error {
+  color: #FF4062;
+}
+
+.register__error {
+  color: #FF4062;
+  font-size: 10px;
+  font-weight: 400;
 }
 
 .register__button {
@@ -113,11 +132,21 @@
   cursor: pointer;
 }
 
+.register__button_disabled {
+  background-color: #e8e8e8;
+}
+
+.register__button_disabled:hover {
+  cursor: default;
+  opacity: 1;
+}
+
 .register__text {
   text-align: center;
   color: #a0a0a0;
   font-size: 14px;
   font-weight: 400;
+  margin: 0;
 }
 
 @media screen and (max-width: 470px) {
