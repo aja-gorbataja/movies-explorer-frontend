@@ -6,7 +6,7 @@ function Login() {
   return (
     <main className="login">
       <Link className="login__logo" to='/' />
-      <h2 className="login__title">Рады видеть!</h2>
+      <h1 className="login__title">Рады видеть!</h1>
       <form className="login__form form" id="login-form">
       <div className="login__container">
           <label className="login__label">E-mail</label>
