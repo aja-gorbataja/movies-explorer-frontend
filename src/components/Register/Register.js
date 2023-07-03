@@ -1,8 +1,15 @@
 import { Link } from "react-router-dom";
 import { Validation } from "../Validation/Validation.js";
 
-function Register() {
+function Register({handleRegister}) {
+
   const { values, errors, valid, handleChange } = Validation({});
+  
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    handleRegister(values.name, values.email, values.password)
+  }
+
   return (
     <main className="register">
       <Link className="register__logo" to='/' />
@@ -24,7 +31,7 @@ function Register() {
           <span className="register__error">{errors.password}</span>
         </div>
       </form>
-      <button className={valid ? "register__button" : "register__button register__button_disabled"} type="submit" form="register-form" disabled={!valid}>Зарегистрироваться</button>
+      <button className={valid ? "register__button" : "register__button register__button_disabled"} type="submit" onClick={handleSubmit} form="register-form" disabled={!valid}>Зарегистрироваться</button>
       <p className="register__text">Уже зарегистрированы? <Link className="register__link" to='/signin' >Войти</Link></p>
     </main>
   )

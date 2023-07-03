@@ -4,8 +4,9 @@ import { useState } from 'react';
 
 import { user } from '../../utils/constants.js'
 
-function Profile({ loggedIn }) {
+function Profile({ loggedIn, handleOut }) {
   const [ edit, setEdit ] = useState(false)
+  
   return (
     <>
     <Header loggedIn={loggedIn} />
@@ -30,7 +31,7 @@ function Profile({ loggedIn }) {
       :
         <>
           <button className="profile__button-edit" type="submit" form="profile-form" onClick={() => setEdit(!edit)}>Редактировать</button>
-          <Link className="profile__button-exit" to='/'>Выйти из аккаунта</Link>
+          <Link className="profile__button-exit" to='/' onClick={handleOut}>Выйти из аккаунта</Link>
         </>
       }
     </main>
