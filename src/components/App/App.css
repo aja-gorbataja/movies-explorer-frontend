@@ -1,0 +1,17 @@
+body {
+  height: 100vh;
+}
+.page {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  font-family: 'Inter', Arial, sans-serif;
+  color: #000000;
+}
+
+@media screen and (max-width: 768px) {
+  .page {
+    max-width: 768px;
+  }
+}
