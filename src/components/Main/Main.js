@@ -9,7 +9,7 @@ import Footer from "../Footer/Footer.js";
 function Main({ loggedIn }) {
   return (
     <>
-      <Header loggedIn={!loggedIn} />
+      <Header loggedIn={loggedIn} />
       <main>
         <Promo />
         <AboutProject />

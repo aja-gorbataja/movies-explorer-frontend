@@ -4,7 +4,7 @@ import Navigation from '../Navigation/Navigation.js';
 function Header({ loggedIn }) {
   return (
     <>
-    {loggedIn ? 
+    {!loggedIn ? 
       <header className="header">
         <div className="header__container">
           <Link to="/" className="header__logo" />
@@ -22,7 +22,6 @@ function Header({ loggedIn }) {
         </div>
       </header>
   }
-      
     </>
 
   )

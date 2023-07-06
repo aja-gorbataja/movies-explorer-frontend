@@ -1,32 +1,42 @@
 import Header from '../Header/Header.js';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { Validation } from "../Validation/Validation.js";
+import { CurrentUserContext } from '../../context/CurrentUserContext.js';
 
-import { user } from '../../utils/constants.js'
+function Profile({ loggedIn, handleOut, handleEditProfile }) {
 
-function Profile({ loggedIn, handleOut }) {
-  const [ edit, setEdit ] = useState(false)
+  const { values, errors, valid, handleChange } = Validation({});
+  const currentUser = useContext(CurrentUserContext);
+  const [ edit, setEdit ] = useState(false);
+  
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    handleEditProfile(values.name, values.email)
+  }
   
   return (
     <>
     <Header loggedIn={loggedIn} />
     <main className="profile">
-      <h1 className="profile__title">Привет, {user.name}!</h1>
-      <form className="profile__form" id="profile-form">
+      <h1 className="profile__title">{`Привет, ${currentUser.name}!`}</h1>
+      <form className="profile__form form" id="profile-form" onSubmit={handleSubmit}>
         <div className="profile__container">
-          <label className="proile__label">Имя</label>
-          <input className="profile__input" type="text" name="name" defaultValue={user.name} disabled={!edit} required></input>
+          <label className="profile__label">Имя</label>
+          <input className={errors.name ? "profile__input profile__input_error" : "profile__input"} type="text" name="name" placeholder={`${currentUser.name}`} value={values.name || ''} onChange={handleChange} disabled={!edit} minLength={2} maxLength={20} required></input>
+          <span className="profile__error">{errors.name}</span>
         </div>
         <span className="profile__input-line" />
         <div className="profile__container">
-          <label className="proile__label">E-mail</label>
-          <input className="profile__input" type="email" name="email" defaultValue={user.email} disabled={!edit} required></input>
+          <label className="profile__label">E-mail</label>
+          <input className={errors.name ? "profile__input profile__input_error" : "profile__input"} type="email" name="email" placeholder={`${currentUser.email}`} value={values.email || ''} onChange={handleChange} disabled={!edit} minLength={2} maxLength={20} required></input>
+          <span className="profile__error">{errors.email}</span>
         </div>
       </form>
       {edit ?
         <>
           <span className="profile__error"></span>
-          <button className="profile__button-save" type="submit" form="profile-form">Сохранить</button>
+          <button className={valid ? "profile__button-save" : "profile__button-save profile__button-save_disabled"} type="submit" form="profile-form" >Сохранить</button>
         </>
       :
         <>
