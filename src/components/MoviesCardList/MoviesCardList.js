@@ -40,7 +40,7 @@ function MoviesCardList({ movies, savedMovies, likeMovie, dislikeMovie, isLiked 
   return (
     <section className="movies-list">
       <div className="movies-list__items">
-        {moviesList.slice(0, moviesQuantity).map((movie) => (
+        {movies && moviesList.slice(0, moviesQuantity).map((movie) => (
         <MoviesCard key={movie.id || movie._id} saved={getSavedMovies(savedMovies, movie)} movie={movie} movies={movies} likeMovie={likeMovie} dislikeMovie={dislikeMovie} isLiked={isLiked} />
         ))}
       </div>
