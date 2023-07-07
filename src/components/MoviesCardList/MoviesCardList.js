@@ -37,10 +37,16 @@ function MoviesCardList({ movies, savedMovies, likeMovie, dislikeMovie, isLiked 
    return savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
  }
 
+ useEffect(() => {
+  if (movies) {
+    setMoviesList(movies.slice(0, moviesQuantity))
+  }
+ }, [movies, moviesQuantity])
+
   return (
     <section className="movies-list">
       <div className="movies-list__items">
-        {movies && moviesList.slice(0, moviesQuantity).map((movie) => (
+        {moviesList.map((movie) => (
         <MoviesCard key={movie.id || movie._id} saved={getSavedMovies(savedMovies, movie)} movie={movie} movies={movies} likeMovie={likeMovie} dislikeMovie={dislikeMovie} isLiked={isLiked} />
         ))}
       </div>
