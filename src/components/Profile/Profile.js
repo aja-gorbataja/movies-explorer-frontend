@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useState, useContext, useEffect } from 'react';
 import { Validation } from "../Validation/Validation.js";
 import { CurrentUserContext } from '../../context/CurrentUserContext.js';
+import { REG_EMAIL, REG_NAME } from "../../utils/regex.js";
 
 function Profile({ loggedIn, handleOut, handleEditProfile }) {
 
@@ -36,13 +37,13 @@ function Profile({ loggedIn, handleOut, handleEditProfile }) {
       <form className="profile__form form" id="profile-form" onSubmit={handleSubmit}>
         <div className="profile__container">
           <label className="profile__label">Имя</label>
-          <input className={errors.name ? "profile__input profile__input_error" : "profile__input"} type="text" name="name" placeholder={`${currentUser.name}`} value={values.name || ''} onChange={handleChange} disabled={!edit} minLength={2} maxLength={20} required></input>
+          <input className={errors.name ? "profile__input profile__input_error" : "profile__input"} type="text" name="name" placeholder={`${currentUser.name}`} value={values.name || ''} onChange={handleChange} disabled={!edit} minLength={2} maxLength={20} pattern={REG_NAME} required></input>
           <span className="profile__error">{errors.name}</span>
         </div>
         <span className="profile__input-line" />
         <div className="profile__container">
           <label className="profile__label">E-mail</label>
-          <input className={errors.name ? "profile__input profile__input_error" : "profile__input"} type="email" name="email" placeholder={`${currentUser.email}`} value={values.email || ''} onChange={handleChange} disabled={!edit} minLength={2} maxLength={20} required></input>
+          <input className={errors.name ? "profile__input profile__input_error" : "profile__input"} type="email" name="email" placeholder={`${currentUser.email}`} value={values.email || ''} onChange={handleChange} disabled={!edit} minLength={2} maxLength={20} pattern={REG_EMAIL} required></input>
           <span className="profile__error">{errors.email}</span>
         </div>
       </form>

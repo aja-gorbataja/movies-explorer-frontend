@@ -26,7 +26,7 @@ function App() {
   function handleRegister(name, email, password) {
     userApi.register({name, email, password})
       .then(() => {
-        navigate('/signin')
+        handleLogin(email, password)
       })
       .catch(() => {
           alert('При регистрации пользователя произошла ошибка.')
