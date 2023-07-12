@@ -9,23 +9,26 @@ import { SHORT_MOVIE } from '../../utils/constants.js';
 
 function Movies({ loggedIn, savedMovies, likeMovie, dislikeMovie, isLoading }) {
   const [ allMovies, setAllMovies ] = useState([]);
-  const [ foundMovies, setFoundMovies ] = useState([])
   const [ shortChecked, setShortChecked ] = useState(false);
   const [ filteredMovies, setFilteredMovies ] = useState([]);
+  const [ emptySearch, setEmptySearch ] = useState(false);
 
   function getAllMovies() {
-    moviesApi.getMovies()
-      .then((data) => {
-        localStorage.setItem('allMovies', JSON.stringify(data));
-        setFilteredMovies(data);
-      })
+      moviesApi.getMovies()
+        .then((data) => {
+          localStorage.setItem('allMovies', JSON.stringify(data));
+          setAllMovies(data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
   }
-
+  
   useEffect(() => {
     if (loggedIn) {
-      getAllMovies();
+      getAllMovies()
     }
-  }, [loggedIn]);
+  })
 
   function filterMovies(movies, query) {
     const queryMovies = movies.filter((movie) => {
@@ -41,19 +44,12 @@ function Movies({ loggedIn, savedMovies, likeMovie, dislikeMovie, isLoading }) {
     return movies.filter((movie) => movie.duration < SHORT_MOVIE);
   }
 
-  function runFilter(movies, query, short) {
-    const moviesList = filterMovies(movies, query, short);
-    setFoundMovies(moviesList);
-    setFilteredMovies(short ? filterDuration(moviesList) : moviesList);
-    localStorage.setItem('movies', JSON.stringify(moviesList));
-  }
-
   function runShortFilter() {
     setShortChecked(!shortChecked);
     if (!shortChecked) {
-      setFilteredMovies(filterDuration(foundMovies));
+      setFilteredMovies(filterDuration(filteredMovies));
     } else {
-      setFilteredMovies(foundMovies);
+      setFilteredMovies(filteredMovies);
     }
     localStorage.setItem('shortMovies', !shortChecked);
   }
@@ -61,33 +57,38 @@ function Movies({ loggedIn, savedMovies, likeMovie, dislikeMovie, isLoading }) {
   function searchMovies(query) {
     localStorage.setItem('movieSearch', query);
     localStorage.setItem('shortMovies', shortChecked);
-    if (localStorage.getItem('allMovies')) {
-      const movies = JSON.parse(localStorage.getItem('allMovies'));
-      runFilter(movies, query, shortChecked);
-    } else {
-      moviesApi.getMovies()
-        .then((data) => {
-          runFilter(data, query, shortChecked);
-        })
-        .catch(() => {
-          alert('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
-        })
-    }
+    const filtered = filterMovies(allMovies, query);
+    setFilteredMovies(filtered);
+    localStorage.setItem('filteredMovies', JSON.stringify(filtered));
   }
 
   useEffect(() => {
-    const movies = JSON.parse(localStorage.getItem('allMovies'));
-    if (localStorage.getItem('movies')) {
-      const movies = JSON.parse(localStorage.getItem('movies'));
-      setFoundMovies(movies);
-  
-      if (localStorage.getItem('shortMovies') === 'true') {
-        setFilteredMovies(filterDuration(movies))
+    const searchResult = JSON.parse(localStorage.getItem('filteredMovies'));
+    if (searchResult) {
+      setFilteredMovies(searchResult);
+    }
+  }, [])
+
+
+  useEffect(() => {
+    if (localStorage.getItem('allMovies')) {
+      setAllMovies(JSON.parse(localStorage.getItem('allMovies')))
+    } else {
+      getAllMovies()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (localStorage.getItem('movieSearch')) {
+      if (filteredMovies.length === 0) {
+        setEmptySearch(true);
+      } else {
+        setEmptySearch(false);
       }
     } else {
-      setFilteredMovies(movies);
+      setEmptySearch(false);
     }
-  }, []);
+  }, [filteredMovies]);
 
   useEffect(() => {
     if (localStorage.getItem('shortMovies') === 'true') {
@@ -102,11 +103,9 @@ function Movies({ loggedIn, savedMovies, likeMovie, dislikeMovie, isLoading }) {
       <Header loggedIn={loggedIn} />
       <main>
         <SearchForm searchMovies={searchMovies} runShortFilter={runShortFilter} shortChecked={shortChecked} />
-        {isLoading ? 
-          <Preloader />
-          :
-          <MoviesCardList savedMovies={savedMovies} movies={filteredMovies} likeMovie={likeMovie} dislikeMovie={dislikeMovie} isLiked={false} loggedIn={loggedIn} />
-        }
+        {isLoading ? <Preloader />
+        :
+        <MoviesCardList savedMovies={savedMovies} movies={filteredMovies} likeMovie={likeMovie} dislikeMovie={dislikeMovie} isLiked={false} loggedIn={loggedIn} emptySearch={emptySearch} />}
       </main>
       <Footer/>
     </>

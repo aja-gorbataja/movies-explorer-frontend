@@ -23,6 +23,7 @@ function App() {
     checkToken();
   }, [])
 
+
   function handleRegister(name, email, password) {
     userApi.register({name, email, password})
       .then(() => {

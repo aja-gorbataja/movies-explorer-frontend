@@ -2,11 +2,9 @@ import MoviesCard from "../MoviesCard/MoviesCard.js";
 import { useState, useEffect,} from "react";
 import { MOBILE, TABLET } from "../../utils/constants.js";
 
-function MoviesCardList({ movies, savedMovies, likeMovie, dislikeMovie, isLiked, loggedIn }) {
+function MoviesCardList({ movies, savedMovies, likeMovie, dislikeMovie, isLiked, emptySearch }) {
   const [ moviesQuantity, setMoviesQuantity ] = useState(0);
-  const [ moviesList, setMoviesList ] = useState([]);
   const [ width, setWidth ] = useState(window.innerWidth);
-
 
   useEffect(() => {
     window.onresize = () => {
@@ -23,10 +21,6 @@ function MoviesCardList({ movies, savedMovies, likeMovie, dislikeMovie, isLiked,
 
     }, [width]);
 
-  useEffect(() => {
-    setMoviesList(movies)
-  }, [movies]);
-
   function handleAddMovies() {
     if (width < TABLET) {
       setMoviesQuantity(moviesQuantity + 2)
@@ -38,17 +32,11 @@ function MoviesCardList({ movies, savedMovies, likeMovie, dislikeMovie, isLiked,
  function getSavedMovies(savedMovies, movie) {
    return savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
  }
-
- useEffect(() => {
-  if (movies) {
-    setMoviesList(movies.slice(0, moviesQuantity))
-  }
- }, [movies, moviesQuantity])
-
+  
   return (
     <section className="movies-list">
       <div className="movies-list__items">
-        {moviesList.map((movie) => (
+        {movies.slice(0, moviesQuantity).map((movie) => (
         <MoviesCard key={movie.id || movie._id} saved={getSavedMovies(savedMovies, movie)} movie={movie} movies={movies} savedMovies={savedMovies} likeMovie={likeMovie} dislikeMovie={dislikeMovie} isLiked={isLiked} />
         ))}
       </div>
@@ -59,9 +47,7 @@ function MoviesCardList({ movies, savedMovies, likeMovie, dislikeMovie, isLiked,
           :
           <div className="movies-list__empty">
             <p className="movies-list__text">Ничего не найдено :( </p>
-          </div>
-    }
-
+          </div>}
     </section>
   )
 }
