@@ -72,3 +72,16 @@
 .movies-list__pagination_hidden {
   display: none;
 }
+
+.movies-list__empty {
+  display: flex;
+  justify-content: center;
+}
+
+.movies-list__text {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+}

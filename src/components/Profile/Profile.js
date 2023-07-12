@@ -12,7 +12,14 @@ function Profile({ loggedIn, handleOut, handleEditProfile }) {
   
   function handleSubmit(evt) {
     evt.preventDefault();
-    handleEditProfile(values.name, values.email)
+    handleEditProfile(values.name, values.email);
+    setEdit(!edit);
+  }
+
+  function handleEdit() {
+    setEdit(!edit);
+    values.name = currentUser.name;
+    values.email = currentUser.email;
   }
   
   return (
@@ -40,7 +47,7 @@ function Profile({ loggedIn, handleOut, handleEditProfile }) {
         </>
       :
         <>
-          <button className="profile__button-edit" type="submit" form="profile-form" onClick={() => setEdit(!edit)}>Редактировать</button>
+          <button className="profile__button-edit" type="submit" form="profile-form" onClick={handleEdit}>Редактировать</button>
           <Link className="profile__button-exit" to='/' onClick={handleOut}>Выйти из аккаунта</Link>
         </>
       }

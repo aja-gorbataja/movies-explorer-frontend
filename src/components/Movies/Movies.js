@@ -5,11 +5,27 @@ import Footer from '../Footer/Footer.js';
 import { useEffect, useState } from 'react';
 import * as moviesApi from '../../utils/moviesApi.js';
 import Preloader from '../Preloader/Preloader.js';
+import { SHORT_MOVIE } from '../../utils/constants.js';
 
 function Movies({ loggedIn, savedMovies, likeMovie, dislikeMovie, isLoading }) {
+  const [ allMovies, setAllMovies ] = useState([]);
   const [ foundMovies, setFoundMovies ] = useState([])
   const [ shortChecked, setShortChecked ] = useState(false);
   const [ filteredMovies, setFilteredMovies ] = useState([]);
+
+  function getAllMovies() {
+    moviesApi.getMovies()
+      .then((data) => {
+        localStorage.setItem('allMovies', JSON.stringify(data));
+        setFilteredMovies(data);
+      })
+  }
+
+  useEffect(() => {
+    if (loggedIn) {
+      getAllMovies();
+    }
+  }, [loggedIn]);
 
   function filterMovies(movies, query) {
     const queryMovies = movies.filter((movie) => {
@@ -22,7 +38,7 @@ function Movies({ loggedIn, savedMovies, likeMovie, dislikeMovie, isLoading }) {
   }
 
   function filterDuration(movies) {
-    return movies.filter((movie) => movie.duration < 40);
+    return movies.filter((movie) => movie.duration < SHORT_MOVIE);
   }
 
   function runFilter(movies, query, short) {
@@ -30,7 +46,6 @@ function Movies({ loggedIn, savedMovies, likeMovie, dislikeMovie, isLoading }) {
     setFoundMovies(moviesList);
     setFilteredMovies(short ? filterDuration(moviesList) : moviesList);
     localStorage.setItem('movies', JSON.stringify(moviesList));
-    localStorage.setItem('allMovies', JSON.stringify(movies));
   }
 
   function runShortFilter() {
@@ -47,8 +62,8 @@ function Movies({ loggedIn, savedMovies, likeMovie, dislikeMovie, isLoading }) {
     localStorage.setItem('movieSearch', query);
     localStorage.setItem('shortMovies', shortChecked);
     if (localStorage.getItem('allMovies')) {
-      const allMovies = JSON.parse(localStorage.getItem('allMovies'));
-      runFilter(allMovies, query, shortChecked);
+      const movies = JSON.parse(localStorage.getItem('allMovies'));
+      runFilter(movies, query, shortChecked);
     } else {
       moviesApi.getMovies()
         .then((data) => {
@@ -61,14 +76,16 @@ function Movies({ loggedIn, savedMovies, likeMovie, dislikeMovie, isLoading }) {
   }
 
   useEffect(() => {
-    const movies = JSON.parse(localStorage.getItem('movies'));
+    const movies = JSON.parse(localStorage.getItem('allMovies'));
     if (localStorage.getItem('movies')) {
+      const movies = JSON.parse(localStorage.getItem('movies'));
       setFoundMovies(movies);
+  
       if (localStorage.getItem('shortMovies') === 'true') {
         setFilteredMovies(filterDuration(movies))
       }
     } else {
-      setFilteredMovies(movies)
+      setFilteredMovies(movies);
     }
   }, []);
 
@@ -88,7 +105,7 @@ function Movies({ loggedIn, savedMovies, likeMovie, dislikeMovie, isLoading }) {
         {isLoading ? 
           <Preloader />
           :
-          <MoviesCardList savedMovies={savedMovies} movies={filteredMovies} likeMovie={likeMovie} dislikeMovie={dislikeMovie} isLiked={false} />
+          <MoviesCardList savedMovies={savedMovies} movies={filteredMovies} likeMovie={likeMovie} dislikeMovie={dislikeMovie} isLiked={false} loggedIn={loggedIn} />
         }
       </main>
       <Footer/>

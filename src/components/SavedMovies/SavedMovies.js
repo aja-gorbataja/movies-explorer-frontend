@@ -36,11 +36,19 @@ function SavedMovies({ loggedIn, savedMovies, dislikeMovie }) {
     setFilteredMovies(shortChecked ? filterDuration(moviesList) : moviesList);
   }, [savedMovies, shortChecked, query]);
 
+  useEffect(() => {
+    if (localStorage.getItem('shortMovies') === 'true') {
+      setShortChecked(true);
+    } else {
+      setShortChecked(false);
+    }
+  }, []);
+
   return (
     <>
     <Header loggedIn={loggedIn}/>
     <main>
-      <SearchForm runFilter={runFilter} runShortFilter={runShortFilter} />
+      <SearchForm runShortFilter={runShortFilter} searchMovies={runFilter} shortChecked={shortChecked} />
       <MoviesCardList isLiked={true} movies={filteredMovies} savedMovies={savedMovies} dislikeMovie={dislikeMovie}/>
     </main>
     <Footer />

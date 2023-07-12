@@ -1,18 +1,14 @@
 import { MOVIES_URL } from "../../utils/moviesApi.js";
+import { fixDuration } from "../../utils/constants.js";
 
-function MoviesCard({ isLiked, saved, likeMovie, dislikeMovie, movie }) {
-
-  function fixDuration(duration) {
-    const hours = Math.floor(duration/60);
-    const minutes = Math.floor(duration % 60);
-    return `${hours > 0 ? hours + 'ч ' : ''}${minutes}м`;
-  }
+function MoviesCard({ isLiked, saved, likeMovie, dislikeMovie, movie, savedMovies }) {
 
   function handleClick() {
     if (!saved) {
       likeMovie(movie);
+    } else {
+      dislikeMovie(savedMovies.filter((item) => item.movieId === movie.id)[0]);
     }
-    
   }
 
   function handleDelete() {

@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import Main from '../Main/Main.js';
 import Movies from '../Movies/Movies.js';
 import SavedMovies from '../SavedMovies/SavedMovies.js';
@@ -62,7 +62,11 @@ function App() {
   function handleOut() {
     setLoggedIn(false);
     localStorage.removeItem('token');
-    localStorage.removeItem('loggedIn')
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('allMovies');
+    localStorage.removeItem('movies');
+    localStorage.removeItem('shortMovies');
+    localStorage.removeItem('movieSearch');
     setCurrentUser({});
     navigate('/')
   }
@@ -71,6 +75,7 @@ function App() {
     userApi.editProfile({name, email})
       .then((res) => {
         setCurrentUser(res);
+        alert('Данные обновлены.')
       })
       .catch(() => {
         alert('При изменении данных пользователя произошла ошибка.')
@@ -119,11 +124,11 @@ function App() {
       <div className="page">
         <Routes>
           <Route path='/' element={<Main loggedIn={loggedIn}/>} />
-          <Route path='/movies' element={<ProtectedRoute element={Movies} loggedIn={loggedIn} savedMovies={savedMovies} likeMovie={likeMovie} dislikeMovie={dislikeMovie} isLoading={isLoading} />} />
-          <Route path='/saved-movies' element={<ProtectedRoute element={SavedMovies} loggedIn={loggedIn} savedMovies={savedMovies} dislikeMovie={dislikeMovie} />} />
-          <Route path='/signup' element={<Register handleRegister={handleRegister} />} />
-          <Route path='/signin' element={<Login handleLogin={handleLogin} />} />
-          <Route path='/profile' element={<ProtectedRoute element={Profile} handleOut={handleOut} handleEditProfile={handleEditProfile} loggedIn={loggedIn} />} />
+          <Route path='/movies' element={loggedIn && <ProtectedRoute path='/movies' loggedIn={loggedIn} element={Movies}  savedMovies={savedMovies} likeMovie={likeMovie} dislikeMovie={dislikeMovie} isLoading={isLoading} />} />
+          <Route path='/saved-movies' element={loggedIn && <ProtectedRoute element={SavedMovies} loggedIn={loggedIn} savedMovies={savedMovies} dislikeMovie={dislikeMovie} />} />
+          <Route path='/signup' element={!loggedIn ? <Register handleRegister={handleRegister} /> : <Navigate to='/' />} />
+          <Route path='/signin' element={!loggedIn ? <Login handleLogin={handleLogin} /> : <Navigate to='/' />} /> 
+          <Route path='/profile' element={loggedIn && <ProtectedRoute element={Profile} handleOut={handleOut} handleEditProfile={handleEditProfile} loggedIn={loggedIn} />} />
           <Route path='/*' element={<Page404 />} />
       </Routes>
       </div>
