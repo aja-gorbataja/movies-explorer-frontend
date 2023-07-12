@@ -1,12 +1,12 @@
 import Header from '../Header/Header.js';
 import { Link } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Validation } from "../Validation/Validation.js";
 import { CurrentUserContext } from '../../context/CurrentUserContext.js';
 
 function Profile({ loggedIn, handleOut, handleEditProfile }) {
 
-  const { values, errors, valid, handleChange } = Validation({});
+  const { values, errors, valid, setValid, handleChange } = Validation({});
   const currentUser = useContext(CurrentUserContext);
   const [ edit, setEdit ] = useState(false);
   
@@ -21,6 +21,12 @@ function Profile({ loggedIn, handleOut, handleEditProfile }) {
     values.name = currentUser.name;
     values.email = currentUser.email;
   }
+
+  useEffect(() => {
+    if (values.name === currentUser.name && values.email === currentUser.email) {
+      setValid(false)
+    }
+  })
   
   return (
     <>
