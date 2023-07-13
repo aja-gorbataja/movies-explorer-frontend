@@ -105,7 +105,7 @@ function Movies({ loggedIn, savedMovies, likeMovie, dislikeMovie, isLoading }) {
         <SearchForm searchMovies={searchMovies} runShortFilter={runShortFilter} shortChecked={shortChecked} />
         {isLoading ? <Preloader />
         :
-        <MoviesCardList savedMovies={savedMovies} movies={filteredMovies} likeMovie={likeMovie} dislikeMovie={dislikeMovie} isLiked={false} loggedIn={loggedIn} emptySearch={emptySearch} />}
+        <MoviesCardList savedMovies={savedMovies} movies={shortChecked ? filterDuration(filteredMovies) : filteredMovies} likeMovie={likeMovie} dislikeMovie={dislikeMovie} isLiked={false} loggedIn={loggedIn} emptySearch={emptySearch} />}
       </main>
       <Footer/>
     </>
