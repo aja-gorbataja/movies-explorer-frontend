@@ -65,7 +65,6 @@ function App() {
     localStorage.removeItem('token');
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('allMovies');
-    localStorage.removeItem('movies');
     localStorage.removeItem('shortMovies');
     localStorage.removeItem('movieSearch');
     localStorage.removeItem('filteredMovies');

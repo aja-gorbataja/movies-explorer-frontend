@@ -23,7 +23,7 @@ function Movies({ loggedIn, savedMovies, likeMovie, dislikeMovie, isLoading }) {
           console.log(err)
         })
   }
-
+  
   function filterMovies(movies, query) {
     const queryMovies = movies.filter((movie) => {
       const movieRu = String(movie.nameRU).toLowerCase();
@@ -40,11 +40,6 @@ function Movies({ loggedIn, savedMovies, likeMovie, dislikeMovie, isLoading }) {
 
   function runShortFilter() {
     setShortChecked(!shortChecked);
-    if (!shortChecked) {
-      setFilteredMovies(filterDuration(filteredMovies));
-    } else {
-      setFilteredMovies(filteredMovies);
-    }
     localStorage.setItem('shortMovies', !shortChecked);
   }
 
@@ -52,7 +47,7 @@ function Movies({ loggedIn, savedMovies, likeMovie, dislikeMovie, isLoading }) {
     localStorage.setItem('movieSearch', query);
     localStorage.setItem('shortMovies', shortChecked);
     const filtered = filterMovies(allMovies, query, shortChecked);
-    setFilteredMovies(shortChecked ? filterDuration(filtered) : filtered);
+    setFilteredMovies(filtered);
     localStorage.setItem('filteredMovies', JSON.stringify(filtered));
   }
 
@@ -63,10 +58,9 @@ function Movies({ loggedIn, savedMovies, likeMovie, dislikeMovie, isLoading }) {
     }
   }, [])
 
-
   useEffect(() => {
     if (localStorage.getItem('allMovies')) {
-      setAllMovies(JSON.parse(localStorage.getItem('allMovies')))
+      setAllMovies(JSON.parse(localStorage.getItem('allMovies')));
     } else {
       getAllMovies()
     }

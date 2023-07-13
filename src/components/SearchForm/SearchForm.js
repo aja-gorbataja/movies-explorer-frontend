@@ -5,7 +5,6 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox.js";
 function SearchForm({ searchMovies, runShortFilter, shortChecked}) {
   const location = useLocation();
   const [ query, setQuery ] = useState('');
-  
 
   function handleQuery(evt) {
   setQuery(evt.target.value);
@@ -34,7 +33,7 @@ function SearchForm({ searchMovies, runShortFilter, shortChecked}) {
     <section className="search">
         <form className="search__form" onSubmit={handleSubmit}>
           <label className="search__line">
-            <input className="search__input" placeholder="Фильм" type="text" name="film-search" onChange={handleQuery} value={query} />
+            <input className="search__input" placeholder="Фильм" type="text" name="film-search" onChange={handleQuery} value={query || ""} />
             <button className="search__button">Поиск</button>
           </label>
           <FilterCheckbox shortChecked={shortChecked} runShortFilter={runShortFilter} />
