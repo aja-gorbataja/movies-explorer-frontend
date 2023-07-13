@@ -31,6 +31,7 @@ export function Validation() {
         values,
         errors,
         valid,
+        setValid,
         handleChange,
         resetForm
     };

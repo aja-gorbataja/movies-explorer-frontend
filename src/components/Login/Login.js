@@ -1,16 +1,23 @@
 import { Link } from "react-router-dom";
 import { Validation } from "../Validation/Validation.js";
+import { REG_EMAIL } from "../../utils/regex.js";
 
-function Login() {
+function Login({handleLogin}) {
   const { values, errors, valid, handleChange } = Validation({});
+  
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    handleLogin(values.email, values.password)
+  }
+
   return (
     <main className="login">
       <Link className="login__logo" to='/' />
       <h1 className="login__title">Рады видеть!</h1>
-      <form className="login__form form" id="login-form">
+      <form className="login__form form" id="login-form" onSubmit={handleSubmit}>
       <div className="login__container">
           <label className="login__label">E-mail</label>
-          <input className={errors.email ? "login__input login__input_error" : "login__input"} type="email" name="email" value={values.email || ''} onChange={handleChange} minLength={2} maxLength={20} required></input>
+          <input className={errors.email ? "login__input login__input_error" : "login__input"} type="email" name="email" value={values.email || ''} onChange={handleChange} minLength={2} maxLength={20} pattern={REG_EMAIL} required></input>
           <span className="login__error">{errors.email}</span>
         </div>
         <div className="login__container">
