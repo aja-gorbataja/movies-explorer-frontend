@@ -54,11 +54,11 @@ function Movies({ loggedIn, savedMovies, likeMovie, dislikeMovie, isLoading }) {
     localStorage.setItem('shortMovies', !shortChecked);
   }
 
-  function searchMovies(query) {
+  function searchMovies(query, shortChecked) {
     localStorage.setItem('movieSearch', query);
     localStorage.setItem('shortMovies', shortChecked);
-    const filtered = filterMovies(allMovies, query);
-    setFilteredMovies(filtered);
+    const filtered = filterMovies(allMovies, query, shortChecked);
+    setFilteredMovies(shortChecked ? filterDuration(filtered) : filtered);
     localStorage.setItem('filteredMovies', JSON.stringify(filtered));
   }
 
