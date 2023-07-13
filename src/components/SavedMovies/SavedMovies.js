@@ -36,14 +36,6 @@ function SavedMovies({ loggedIn, savedMovies, dislikeMovie }) {
     setFilteredMovies(shortChecked ? filterDuration(moviesList) : moviesList);
   }, [savedMovies, shortChecked, query]);
 
-  useEffect(() => {
-    if (localStorage.getItem('shortMovies') === 'true') {
-      setShortChecked(true);
-    } else {
-      setShortChecked(false);
-    }
-  }, []);
-
   return (
     <>
     <Header loggedIn={loggedIn}/>

@@ -68,7 +68,8 @@ function App() {
     localStorage.removeItem('movies');
     localStorage.removeItem('shortMovies');
     localStorage.removeItem('movieSearch');
-    localStorage.removeItem('filteredMovies')
+    localStorage.removeItem('filteredMovies');
+    localStorage.removeItem('searchQuery')
     setCurrentUser({});
     navigate('/')
   }

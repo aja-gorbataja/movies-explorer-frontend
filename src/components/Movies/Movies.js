@@ -23,12 +23,6 @@ function Movies({ loggedIn, savedMovies, likeMovie, dislikeMovie, isLoading }) {
           console.log(err)
         })
   }
-  
-  useEffect(() => {
-    if (loggedIn) {
-      getAllMovies()
-    }
-  })
 
   function filterMovies(movies, query) {
     const queryMovies = movies.filter((movie) => {
